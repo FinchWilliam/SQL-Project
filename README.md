@@ -1,11 +1,10 @@
 # Final-Project-Transforming-and-Analyzing-Data-with-SQL
 
 ## Project/Goals
-(fill in your description and goals here)
-
+To clean and organise the data into an easily readable format with which I can glean meaningful information.
 ## Process
-### (your step 1)
-### (your step 2)
+1. After loading the data in I will familiarise myself with the dataset, what the different columns are and how the data all links together.
+2. 
 
 ## Results
 (fill in what you discovered this data could tell you and how you used the data to answer those questions)
