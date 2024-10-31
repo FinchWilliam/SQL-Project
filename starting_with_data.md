@@ -1370,15 +1370,16 @@ at least 100 visits = 208 times
 at least 200 visits = 63 times
 at least 300 visits = 33 times
 
-Question 5: find all customers who have only used the website once.
+Question 5: Lets compare the amount(value and number of) of purchases from single visit users vs return users
 
 SQL Queries: 
-SELECT DISTINCT -- show me all the unique visitor id's that have visited just once
-	fullvisitorid
+SELECT DISTINCT
+	fullvisitorid,
+	SUM(totaltransactionrevenue) OVER ()/1000000
 FROM
-	analytics
+	all_sessions
 WHERE 
-	fullvisitorid NOT IN 
+	transactions = 1 AND fullvisitorid NOT IN 
 	(
 		SELECT DISTINCT
 			fullvisitorid
@@ -1387,5 +1388,6 @@ WHERE
 		WHERE 
 			visitnumber > 1
 	)
+
 Answer:
-	there are 95827 visitors that have used the sight just once and 24191 that have used it at least twice
+	we have 59 purchases with a value of $10,784.86 for single visit clients and only 21 with a value of $3496.45 for return clients
