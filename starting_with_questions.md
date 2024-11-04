@@ -97,6 +97,8 @@ FROM
 
 ### Answer:
 
+<details>
+
 |	country	|	city	|	avg_per_city	|	avg_per_country	|
 |	---	|	---	|	---	|	---	|
 |	Australia	|	Australia	|	2	|	2	|
@@ -154,7 +156,7 @@ FROM
 |	United States	|	Washington	|	1	|	7.3728814	|
 |	Vietnam	|	Vietnam	|	2	|	2	|
 
-
+</details>
 
 
 
@@ -267,6 +269,8 @@ ORDER BY
 
 ### Answer:
 
+<details>
+
 |	country	|	city	|	productname	|	number_sold	|
 |	---	|	---	|	---	|	---	|
 |	Australia	|	Sydney	|	 Cam Indoor Security Camera - USA	|	1	|
@@ -319,7 +323,7 @@ ORDER BY
 |	United States	|	United States	|	 Protect Smoke + CO White Wired Alarm-USA	|	2	|
 |	United States	|	United States	|	 Learning Thermostat 3rd Gen-USA - Stainless Steel	|	2	|
 
-
+</details>
 
 
 
@@ -361,7 +365,11 @@ ORDER BY
 ~~~
 	
 ### Answer:
+
+<details>
+
 ---Per City ---
+
 |	country	|	city	|	total_per_city	|
 |	---	|	---	|	---	|
 |	Australia	|	Sydney	|	358	|
@@ -388,6 +396,7 @@ ORDER BY
 
 
 --- Per Country --
+
 |	country	|	total_per_country	|
 |	---	|	---	|
 |	Australia	|	358	|
@@ -396,6 +405,7 @@ ORDER BY
 |	Switzerland	|	16.99	|
 |	United States	|	13154.17	|
 
+</details>
 
 As you can see the vast majority of sales are occuring inside of the United States
 
