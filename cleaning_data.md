@@ -8,6 +8,9 @@
 4. checking for different data in different tables, for example the sales_report table and the Sales_by_sku table have almost identical total_ordered columns, with a few datapoints in the sales_by_sku table that are not in the reports table
 
 5. Checking wether fullvisitorid's are unique to a country and city (they are not)
+
+6. Create Views of the all sessions and analytics tables with the categories and countries cleaned up and null columns removed
+
 ## Queries:
 ### Below, provide the SQL queries you used to clean your data.
 --1.
@@ -116,6 +119,7 @@ WHERE
 	fullvisitorid = 7.199240861547272e+18;
 ~~~
 
+--6
 ~~~SQL
 CREATE OR REPLACE VIEW cl_analytics AS /** create a view of the analytics table without the null columns and with prices / 1000000 **/
 SELECT 
