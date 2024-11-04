@@ -57,6 +57,8 @@ ORDER BY
 ~~~
 ### Answer: 
 
+<details>
+
 |	country	|	city	|	productname	|	number_sold	|	avg_per_city	|	avg_per_country	|	sum	|
 |	---	|	---	|	---	|	---	|	---	|	---	|	---	|
 |	Australia	|	Sydney	|	 Cam Indoor Security Camera - USA	|	1	|	119	|	119	|	51	|
@@ -109,7 +111,7 @@ ORDER BY
 |	United States	|	United States	|	 Learning Thermostat 3rd Gen-USA - Stainless Steel	|	2	|	149	|	65.02086957	|	51	|
 |	United States	|	United States	|	 Protect Smoke + CO White Wired Alarm-USA	|	2	|	79	|	65.02086957	|	51	|
 
-
+</details>
 
 
 ## Question 2: What is the max/min and average cost of each item, broken down by country and city
