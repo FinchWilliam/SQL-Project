@@ -7,12 +7,12 @@ WITH sell_count AS /** this first cte counts the amount of each item sold per ci
 	SELECT 
 		p.productname,
 		als.country,
-		CASE 
+		CASE /** to clean up the "not available in free data set" and "not set" options **/
 			WHEN als.city LIKE 'not avail%' THEN als.country
 			WHEN als.city LIKE '%not se%' THEN als.country
 			ELSE als.city
 		END AS city,
-		AVG(als.productprice)/1000000 AS avg_price, 
+		AVG(als.productprice)/1000000 AS avg_price, /** gets the average price of all sold items and adjusts them **/
 		count(*) AS number_sold
 	FROM
 		all_sessions als
@@ -21,13 +21,13 @@ WITH sell_count AS /** this first cte counts the amount of each item sold per ci
 	ON
 		p.sku = als.productsku
 	WHERE 
-		als.transactions IS NOT NULL 
+		als.transactions IS NOT NULL /** products that were actually purchased **/
 	GROUP BY
 		p.productname,
 		als.city,
 		als.country
 ),
-ranked_count AS 
+ranked_count AS /** this cte will rank the items sold in each city **/
 (
 	SELECT
 		*,
@@ -35,7 +35,7 @@ ranked_count AS
 	FROM
 		sell_count
 )
-SELECT 
+SELECT /** finally we just select the top ranking items from each city **/
 	rc.country, 
 	rc.city,
 	rc.productname,
