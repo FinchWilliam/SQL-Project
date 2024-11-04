@@ -1,4 +1,4 @@
-What issues will you address by cleaning the data?
+# What issues will you address by cleaning the data?
 1. One of the first things that jumped out at me was the cities being unavailable in this dataset, I started by adjusting it so that whenever there was not city set I would look at the country instead, however that throws off averages when looking at individual cities, So I will have to remove those results for when we are looking at the city level of things.
 
 2. Checking through to find primary keys (if any) and seeing where I can connect tables together
@@ -8,10 +8,11 @@ What issues will you address by cleaning the data?
 4. checking for different data in different tables, for example the sales_report table and the Sales_by_sku table have almost identical total_ordered columns, with a few datapoints in the sales_by_sku table that are not in the reports table
 
 5. Checking wether fullvisitorid's are unique to a country and city (they are not)
-Queries:
-Below, provide the SQL queries you used to clean your data.
+## Queries:
+### Below, provide the SQL queries you used to clean your data.
 --1.
-WITH cities_cleaned AS -- This will remove the non-set citys from the equation
+~~~SQL
+WITH cities_cleaned AS /** This will remove the non-set citys from the equation **/
 (
 	SELECT 
 		country,
@@ -31,12 +32,14 @@ FROM
 	cities_cleaned
 WHERE
 	cities != country
-	-- this step is only included when I am looking for averages across the city level as this will throw off the averages 
+	/** this step is only included when I am looking for averages across the city level as this will throw off the averages **/
 GROUP BY 
 	country, cities;
+~~~
 
 --2.
-SELECT -- This query will tell me if there is more than one of any data point in the column so I know if it is a PK
+~~~SQL
+SELECT /** This query will tell me if there is more than one of any data point in the column so I know if it is a PK **/
 	fullvisitorid, 
 	COUNT(*)
 FROM 
@@ -45,9 +48,11 @@ GROUP BY
 	fullvisitorid
 HAVING 
 	COUNT(*) > 1;
-	
+~~~
+
 --3. 
-SELECT -- checking if the "sentiment score" and "sentimentmagnitude" columns are just repeated data
+~~~SQL
+SELECT /** checking if the "sentiment score" and "sentimentmagnitude" columns are just repeated data **/
 	p.sku,
 	p.productname,
 	p.sentimentscore,
@@ -60,9 +65,11 @@ JOIN
 	sales_report sr
 	ON p.sku = sr.productsku
 WHERE p.sentimentscore != sr.sentimentscore OR p.sentimentmagnitude != sr.sentimentmagnitude;
+~~~
 
---4. 
-SELECT
+--4.
+~~~SQL 
+SELECT /** checking if the total_ordered is the same across the two tables **/
 	sbs.productsku,
 	sbs.total_ordered AS salestbl,
 	sr.total_ordered AS reportstbl
@@ -73,8 +80,10 @@ full JOIN
 	ON sr.productsku = sbs.productsku
 WHERE 
 	sbs.total_ordered IS NULL OR sr.total_ordered IS NULL;
+~~~
 
 --5.
+~~~SQL
 WITH cities_count AS
 (
 SELECT 
@@ -95,12 +104,20 @@ FROM
 GROUP BY
 	fullvisitorid
 HAVING count(*) > 1;
+~~~
 
 -- followed by spot checking the results to see where they differ
-select * from all_sessions WHERE fullvisitorid = 7.199240861547272e+18;
+~~~SQL
+select
+	* 
+FROM 
+	all_sessions 
+WHERE 
+	fullvisitorid = 7.199240861547272e+18;
+~~~
 
-
-CREATE OR REPLACE VIEW cl_analytics AS -- create a view of the analytics table without the null columns and with prices / 1000000
+~~~SQL
+CREATE OR REPLACE VIEW cl_analytics AS /** create a view of the analytics table without the null columns and with prices / 1000000 **/
 SELECT 
 	visitnumber,
 	visitid,
@@ -116,9 +133,10 @@ SELECT
 	revenue / 1000000 AS revenue,
 	unit_price / 1000000 AS unit_price
 FROM analytics;
+~~~
 
-
-CREATE OR REPLACE VIEW cl_all_sessions AS -- creating a cleaned up all_sessions page, moving some information to products page and fixing some nulls and prices.
+~~~SQL
+CREATE OR REPLACE VIEW cl_all_sessions AS /** creating a cleaned up all_sessions page, moving some information to products page and fixing some nulls and prices. **/
 SELECT 
 	fullvisitorid,
 	channelgrouping,
@@ -130,7 +148,7 @@ SELECT
 		ELSE city
 		END AS city,
 	COALESCE(totaltransactionrevenue, 0)/1000000 AS totaltransactionrevenue,
-	COALESCE(transactions, 0)::boolean,
+	COALESCE(transactions, 0)::boolean AS transactions,
 	timeonsite,
 	pageviews,
 	sessionqualitydim,
@@ -157,9 +175,10 @@ SELECT
 	ecommerceaction_option
 FROM
 	all_sessions;
-	
+~~~
 
-SELECT -- Cleaning the products category to remove the parent categories  and simplify for the sake of generalisations across countries
+~~~SQL
+SELECT /** Cleaning the products category to remove the parent categories  and simplify for the sake of generalisations across countries **/
 	DISTINCT v2productcategory,
 	CASE
 		WHEN LOWER(v2productcategory) LIKE '%apparel%' THEN 'Apparel'
@@ -185,7 +204,8 @@ SELECT -- Cleaning the products category to remove the parent categories  and si
 		WHEN LOWER(v2productcategory) LIKE '%fun%' THEN 'Games'
 		WHEN LOWER(v2productcategory) LIKE '%limited%' THEN 'Limited'
 		WHEN LOWER(v2productcategory) LIKE '%kids%' THEN 'Kids'
-		ELSE regexp_replace(v2productcategory, '/', '','gi') -- this probably would have been simpler with a few regexp expressions to remove things however this method allowed me to see exactly what I was changing at every step.
+		ELSE regexp_replace(v2productcategory, '/', '','gi') /** this probably would have been simpler with a few regexp expressions to remove things however this method allowed me to see exactly what I was changing at every step. **/
 	END AS clean_categories
 FROM
 	all_sessions
+~~~
