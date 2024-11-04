@@ -10,6 +10,9 @@ To clean and organise the data into an easily readable format with which I can g
 
 ## Results
 We are able to see our repeat usage and sales data for the snapshot of data we have, organised in a vastly more legible fashion. 
+<picture>
+ <img alt="Table ERD" src="https://github.com/FinchWilliam/SQL-Project/blob/main/SQL%20Project%20ERD.png?raw=true">
+</picture>
 
 
 ## Challenges 
