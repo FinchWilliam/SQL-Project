@@ -181,6 +181,7 @@ FROM
 ORDER BY
 	categories
 ~~~
+
 Answer:
 We can see a big variation on the price of the products ordered in each category depending on what the country we're looking at is.
 
@@ -188,6 +189,7 @@ We can see a big variation on the price of the products ordered in each category
 Question 3: what does the spread of item cost look like according to different countries.
 
 SQL Queries:
+~~~SQL
 WITH price_ranked AS /** rank my prices to find the highest and lowest with the countries **/
 (
 	SELECT
@@ -203,14 +205,14 @@ WITH price_ranked AS /** rank my prices to find the highest and lowest with the 
 ),
 min_max AS
 (
-	SELECT -- remove all products and duplicates that have the same price across all countries and limit it to my biggest and smallest values.
+	SELECT /** remove all products and duplicates that have the same price across all countries and limit it to my biggest and smallest values. **/
 		DISTINCT *
 	FROM
 		price_ranked
 	WHERE 
 		NOT (low_high = high_low AND low_high = 1) AND (high_low = 1 OR low_high = 1)
 )
-SELECT --give me an easy to read list of the price it is in different countries and who is the cheapest and who is most expensive
+SELECT /**give me an easy to read list of the price it is in different countries and who is the cheapest and who is most expensive **/
 	p.productname,
 	mm.productprice,
 	CASE
@@ -227,7 +229,7 @@ JOIN
 	products p
 ON 
 	mm.productsku = p.sku
-	
+~~~
 Answer:
 running through the results gives us an overwhelming trend towards United States in the cheapest location for products.
 
@@ -235,20 +237,22 @@ running through the results gives us an overwhelming trend towards United States
 Question 4: how many customers do we have using the website three or more times?
 
 SQL Queries:
+~~~SQL
 WITH visit_list AS
 (
-	SELECT DISTINCT -- gives me a list of distinct visitnumbers and there visitorid's
+	SELECT DISTINCT /** gives me a list of distinct visitnumbers and there visitorid's **/
 		visitnumber,
 		fullvisitorid
 	FROM
 		analytics
 	WHERE 
-		visitnumber >= 3 -- change this to see how many unique visitors we have had more than 1
+		visitnumber >= 3 /** change this to see how many unique visitors we have had more than 1 **/
 )
-SELECT -- count the number of unique visitors
+SELECT /** count the number of unique visitors **/
 	count(*)
 FROM
 	visit_list
+~~~
 
 Answer:
 at least 3 visits = 21425 times
@@ -258,22 +262,23 @@ at least 300 visits = 33 times
 
 Question 5: Lets compare the amount(value and number of) of purchases from single visit users vs return users
 
-SQL Queries: 
+SQL Queries:
+~~~SQL 
 SELECT DISTINCT
 	fullvisitorid,
-	SUM(totaltransactionrevenue) OVER ()/1000000
+	SUM(totaltransactionrevenue) OVER ()/1000000 AS total_sold /**sum all sales **/
 FROM
 	all_sessions
 WHERE 
 	transactions = 1 AND fullvisitorid NOT IN 
 	(
-		SELECT DISTINCT
+		SELECT DISTINCT /** Find a list of clients who have used the sight more than once **/
 			fullvisitorid
 		FROM 
 			analytics
 		WHERE 
 			visitnumber > 1
 	)
-
+~~~
 Answer:
 	we have 59 purchases with a value of $10,784.86 for single visit clients and only 21 with a value of $3496.45 for return clients
