@@ -1,7 +1,7 @@
 Question 1: How much does the average item cost in each city/country
 
 SQL Queries:
-***SQL
+~~~SQL
 WITH sell_count AS 
 (
 	SELECT 
@@ -54,7 +54,7 @@ WHERE
 ORDER BY
 	country,
 	city
-***
+~~~
 Answer: 
 country	city	productname	number_sold	price_per_city	avg
 (not set)	(not set)	 Men's Long Sleeve Raglan Ocean Blue	2	24.99	29.99
