@@ -56,6 +56,7 @@ ORDER BY
 	city
 ~~~
 Answer: 
+<details>
 country	city	productname	number_sold	price_per_city	avg
 (not set)	(not set)	 Men's Long Sleeve Raglan Ocean Blue	2	24.99	29.99
 (not set)	(not set)	 Men's Long Sleeve Pullover Badge Tee Heather	2	34.99	29.99
@@ -1225,22 +1226,23 @@ Vietnam	Ho Chi Minh City	22 oz  Bottle Infuser	1	4.99	25.20571429
 Vietnam	Ho Chi Minh City	 Men's Airflow 1/4 Zip Pullover Black	1	69.99	25.20571429
 Vietnam	Vietnam	Android Men's Vintage Tank	2	20.99	25.20571429
 Zimbabwe	Zimbabwe	 Screen Cleaning Cloth	1	1.99	1.99
-
+</details>
 
 
 Question 2: What is the max/min and average cost of each item, broken down by country and city
 
 SQL Queries:
+~~~SQL
 WITH cleaned AS
 (
 	SELECT 
 		country,
-		CASE -- to clean up the "not available in free data set" and "not set" options
+		CASE /** to clean up the "not available in free data set" and "not set" options **/
 			WHEN city LIKE 'not avail%' THEN country
 			WHEN city LIKE '%not se%' THEN country
 			ELSE city
 		END AS city,
-		CASE -- Clean up the product category section
+		CASE /** Clean up the product category section **/
 			WHEN LOWER(v2productcategory) LIKE '%apparel%' THEN 'Apparel'
 			WHEN LOWER(v2productcategory) LIKE '%drinkware%' THEN 'Drinkware'
 			WHEN LOWER(v2productcategory) LIKE '%bags%' THEN 'Bags'
@@ -1271,8 +1273,8 @@ WITH cleaned AS
 	FROM
 		all_sessions
 ),
-avg_calculations AS
-( -- to calculate my max and minimums and averages 
+avg_calculations AS /** to calculate my max and minimums and averages **/
+( 
 	SELECT
 		country,
 		city,
@@ -1289,13 +1291,13 @@ avg_calculations AS
 	FROM
 		cleaned
 )
-SELECT DISTINCT
+SELECT DISTINCT /** removes duplicate values for clean looking **/
 	*
 FROM
 	avg_calculations
 ORDER BY
 	categories
-
+~~~
 Answer:
 We can see a big variation on the price of the products ordered in each category depending on what the country we're looking at is.
 
@@ -1303,7 +1305,7 @@ We can see a big variation on the price of the products ordered in each category
 Question 3: what does the spread of item cost look like according to different countries.
 
 SQL Queries:
-WITH price_ranked AS -- rank my prices to find the highest and lowest with the countries
+WITH price_ranked AS /** rank my prices to find the highest and lowest with the countries **/
 (
 	SELECT
 		country,
