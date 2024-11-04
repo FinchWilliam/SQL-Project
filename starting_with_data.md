@@ -1,6 +1,6 @@
-# Question 1: How much does the average item cost in each city/country
+## Question 1: How much does the average item cost in each city/country
 
-## SQL Queries:
+### SQL Queries:
 ~~~SQL
 WITH sell_count AS /** this first cte counts the amount of each item sold per city**/
 (
@@ -55,7 +55,7 @@ ORDER BY
 	country,
 	city
 ~~~
-Answer: 
+### Answer: 
 
 |	country	|	city	|	productname	|	number_sold	|	avg_per_city	|	avg_per_country	|	sum	|
 |	---	|	---	|	---	|	---	|	---	|	---	|	---	|
@@ -112,9 +112,9 @@ Answer:
 
 
 
-Question 2: What is the max/min and average cost of each item, broken down by country and city
+## Question 2: What is the max/min and average cost of each item, broken down by country and city
 
-SQL Queries:
+### SQL Queries:
 ~~~SQL
 WITH cleaned AS
 (
@@ -182,13 +182,13 @@ ORDER BY
 	categories
 ~~~
 
-Answer:
+### Answer:
 We can see a big variation on the price of the products ordered in each category depending on what the country we're looking at is.
 
 
-Question 3: what does the spread of item cost look like according to different countries.
+## Question 3: what does the spread of item cost look like according to different countries.
 
-SQL Queries:
+### SQL Queries:
 ~~~SQL
 WITH price_ranked AS /** rank my prices to find the highest and lowest with the countries **/
 (
@@ -230,13 +230,13 @@ JOIN
 ON 
 	mm.productsku = p.sku
 ~~~
-Answer:
+### Answer:
 running through the results gives us an overwhelming trend towards United States in the cheapest location for products.
 
 
-Question 4: how many customers do we have using the website three or more times?
+## Question 4: how many customers do we have using the website three or more times?
 
-SQL Queries:
+### SQL Queries:
 ~~~SQL
 WITH visit_list AS
 (
@@ -254,15 +254,15 @@ FROM
 	visit_list
 ~~~
 
-Answer:
+### Answer:
 at least 3 visits = 21425 times
 at least 100 visits = 208 times
 at least 200 visits = 63 times
 at least 300 visits = 33 times
 
-Question 5: Lets compare the amount(value and number of) of purchases from single visit users vs return users
+## Question 5: Lets compare the amount(value and number of) of purchases from single visit users vs return users
 
-SQL Queries:
+### SQL Queries:
 ~~~SQL 
 SELECT DISTINCT
 	fullvisitorid,
@@ -280,5 +280,5 @@ WHERE
 			visitnumber > 1
 	)
 ~~~
-Answer:
+### Answer:
 	we have 59 purchases with a value of $10,784.86 for single visit clients and only 21 with a value of $3496.45 for return clients
