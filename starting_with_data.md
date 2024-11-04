@@ -281,4 +281,4 @@ WHERE
 	)
 ~~~
 ### Answer:
-	we have 59 purchases with a value of $10,784.86 for single visit clients and only 21 with a value of $3496.45 for return clients
+we have 59 purchases with a value of $10,784.86 for single visit clients and only 21 with a value of $3496.45 for return clients
