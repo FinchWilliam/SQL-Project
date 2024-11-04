@@ -9,7 +9,8 @@ To clean and organise the data into an easily readable format with which I can g
 4. Create charts and powerpoint to explain insights.
 
 ## Results
-We are able to see our repeat usage and 
+We are able to see our repeat usage and sales data for the snapshot of data we have, organised in a vastly more legible fashion. 
+
 
 ## Challenges 
 No real Primary Keys
