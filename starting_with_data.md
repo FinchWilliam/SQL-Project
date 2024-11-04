@@ -57,6 +57,7 @@ ORDER BY
 ~~~
 Answer: 
 <details>
+
 |	country	|	city	|	productname	|	number_sold	|	avg_per_city	|	avg_per_country	|	sum	|
 |	---	|	---	|	---	|	---	|	---	|	---	|	---	|
 |	Australia	|	Sydney	|	 Cam Indoor Security Camera - USA	|	1	|	119	|	119	|	51	|
