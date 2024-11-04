@@ -1,6 +1,6 @@
-Question 1: How much does the average item cost in each city/country
+#Question 1: How much does the average item cost in each city/country
 
-SQL Queries:
+##SQL Queries:
 ~~~SQL
 WITH sell_count AS /** this first cte counts the amount of each item sold per city**/
 (
